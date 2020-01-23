@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %} Your Bookings {% endblock %}
+
+{% block body %}
+<style>
+    body 
+    {
+        background-image: url('/static/images/bg-01.jpg');
+        background-size: cover;
+        background-position: bottom;
+    }
+
+    .jumbotron 
+    {
+        background: none;
+    }
+
+    .card 
+    {
+        background-color: rgba(121, 207, 134, 0.5);
+    }
+</style>
+
+<div class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="card border-rounded-lg">
+            <div class="card-header text-center">
+                <h3 class="display-5">Here are your Bookings!</h3>
+            </div>
+            <div class="class-body">
+                <br>
+                <table class="table bordorless">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center">Your ID</th>
+                            <th scope="col" class="text-center">Airline Code</th>
+                            <th scope="col" class="text-center">Flight Number</th>
+                            <th scope="col" class="text-center">Class</th>
+                            <th scope="col" class="text-center">Card Used</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <form action="{{ url_for('main.deleteBooking') }}" method="POST">
+                            <tr style="border-bottom:hidden;">
+                                <td class="text-center align-middle" name="userID">{{ booking[0] }}</td>
+                                <td class="text-center align-middle" name="a-code">{{ booking[2] }}</td>
+                                <td class="text-center align-middle" name="flightNum">{{ booking[1] }}</td>
+                                <td class="text-center align-middle" name="class">{{ booking[3] }}</td>
+                                <td class="text-center align-middle" name="cc">********{{ booking[4] % 10 }}</td>
+                                <td class="text-center align-middle" name="submission">
+                                    <button type="submit" class="btn badge-pill badge-danger">
+                                        Cancel Booking
+                                    </button>
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="login100-form-btn" onclick="redirect()">Main Page</button>
+</div>
+<p style="padding-bottom: 2em;"></p>
+
+{% endblock %}
